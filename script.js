@@ -1,4 +1,3 @@
-// Base de données des utilisateurs
 const users = [
     { name: "Lucas NOFFRAY" },
     { name: "Yamileth TERAN PETAQUERO" },
@@ -11,10 +10,10 @@ const users = [
     { name: "Casey HEAGERTY" }
 ];
 
-// Variables d'état
+
 let selectedUser = null;
 
-// Elements DOM
+
 const nameSearchInput = document.getElementById('nameSearch');
 const suggestionsContainer = document.getElementById('suggestions');
 const nextBtn = document.getElementById('nextBtn');
@@ -24,20 +23,20 @@ const nameError = document.getElementById('nameError');
 const passwordError = document.getElementById('passwordError');
 const passwordInputs = document.querySelectorAll('.password-input:not(.fixed-letter)');
 
-// Étapes
+
 const step1 = document.getElementById('step1');
 const step2 = document.getElementById('step2');
 const step3 = document.getElementById('step3');
 
-// Variable pour suivre l'index sélectionné lors de la navigation avec Tab
+
 let highlightedIndex = -1;
 let filteredUsers = [];
 
-// Fonction de recherche
+
 nameSearchInput.addEventListener('input', function() {
     const searchQuery = this.value.toLowerCase();
     
-    // Effacer les suggestions précédentes
+    
     suggestionsContainer.innerHTML = '';
     selectedUser = null;
     nextBtn.disabled = true;
@@ -45,12 +44,12 @@ nameSearchInput.addEventListener('input', function() {
     
     if (searchQuery.length < 2) return;
     
-    // Filtrer les résultats
+    
     filteredUsers = users.filter(user => 
         user.name.toLowerCase().includes(searchQuery)
     );
     
-    // Afficher les suggestions
+    
     filteredUsers.forEach((user, index) => {
         const item = document.createElement('div');
         item.classList.add('suggestion-item');
@@ -65,7 +64,7 @@ nameSearchInput.addEventListener('input', function() {
     });
 });
 
-// Fonction pour sélectionner un utilisateur
+
 function selectUser(user) {
     nameSearchInput.value = user.name;
     selectedUser = user;
@@ -76,25 +75,25 @@ function selectUser(user) {
     filteredUsers = [];
 }
 
-// Gérer la navigation avec Tab dans les suggestions
+
 nameSearchInput.addEventListener('keydown', function(e) {
     const suggestions = document.querySelectorAll('.suggestion-item');
     
     if (e.key === 'Tab' && suggestions.length > 0) {
-        e.preventDefault(); // Empêcher le comportement par défaut de Tab
+        e.preventDefault(); 
         
-        // Supprimer la mise en évidence précédente
+        
         suggestions.forEach(item => item.classList.remove('highlighted'));
         
         if (e.shiftKey) {
-            // Tab + Shift (navigation en arrière)
+            
             highlightedIndex = highlightedIndex <= 0 ? suggestions.length - 1 : highlightedIndex - 1;
         } else {
-            // Tab (navigation en avant)
+            
             highlightedIndex = (highlightedIndex + 1) % suggestions.length;
         }
         
-        // Mettre en évidence la nouvelle sélection
+        
         const highlightedItem = suggestions[highlightedIndex];
         highlightedItem.classList.add('highlighted');
         highlightedItem.scrollIntoView({ block: 'nearest' });
@@ -107,7 +106,7 @@ nameSearchInput.addEventListener('keydown', function(e) {
     }
 });
 
-// Passer à l'étape suivante
+
 nextBtn.addEventListener('click', function() {
     if (!selectedUser) {
         nameError.textContent = "Veuillez sélectionner un nom dans la liste";
@@ -117,11 +116,11 @@ nextBtn.addEventListener('click', function() {
     step1.classList.remove('active');
     step2.classList.add('active');
     
-    // Focus sur le premier champ du mot de passe
+    
     passwordInputs[0].focus();
 });
 
-// S'assurer que les champs sont vides au chargement de la page
+
 window.addEventListener('load', function() {
     passwordInputs.forEach(input => {
         input.value = '';
@@ -129,7 +128,7 @@ window.addEventListener('load', function() {
     });
 });
 
-// Configuration des champs de mot de passe
+
 passwordInputs.forEach((input, index) => {
     // Passer au champ suivant quand une lettre est saisie
     input.addEventListener('input', function() {
@@ -159,7 +158,6 @@ passwordInputs.forEach((input, index) => {
     });
 });
 
-// Vérifier si la lettre saisie est correcte
 function checkPasswordInput(input) {
     const correctValue = input.getAttribute('data-correct');
     
@@ -172,9 +170,8 @@ function checkPasswordInput(input) {
         input.classList.add('incorrect');
         input.classList.remove('correct');
     }
-}
+};
 
-// Valider le mot de passe complet
 validateBtn.addEventListener('click', function() {
     // Vérifier si tous les champs sont remplis correctement
     let allCorrect = true;
@@ -199,16 +196,15 @@ validateBtn.addEventListener('click', function() {
     }
 });
 
-// Télécharger le certificat
 downloadBtn.addEventListener('click', function() {
     if (!selectedUser) return;
     
-    // Formatage du nom de fichier selon les conventions observées dans l'image
+    
     const userName = selectedUser.name;
     const nameParts = userName.split(" ");
     let fileName;
     
-    // Format spécial observé dans l'image (sans espace entre prénom et nom)
+    
     if (nameParts.length >= 2) {
         const prenom = nameParts[0];
         const nom = nameParts.slice(1).join("");
@@ -217,10 +213,8 @@ downloadBtn.addEventListener('click', function() {
         fileName = userName.replace(/\s+/g, '') + ".pdf";
     }
     
-    // Chemin vers le certificat
     const certificatePath = "Certificats/" + fileName;
     
-    // Créer un lien pour télécharger le fichier
     const a = document.createElement('a');
     a.href = certificatePath;
     a.download = fileName;
@@ -229,7 +223,6 @@ downloadBtn.addEventListener('click', function() {
     document.body.removeChild(a);
 });
 
-// Cliquer en dehors des suggestions pour les fermer
 document.addEventListener('click', function(e) {
     if (!suggestionsContainer.contains(e.target) && e.target !== nameSearchInput) {
         suggestionsContainer.innerHTML = '';
