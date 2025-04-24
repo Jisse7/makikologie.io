@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificat Maître Sushi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Certificat Maître Sushi</h1>
+        <div class="sushi-icon">🍣</div>
+        
+        <!-- Step 1: Name search -->
+        <div class="step active" id="step1">
+            <label for="nameSearch">Entrez votre prénom et nom :</label>
+            <div class="search-container">
+                <input type="text" id="nameSearch" placeholder="Ex: Prénom Nom" autocomplete="off">
+                <div class="suggestions" id="suggestions"></div>
+            </div>
+            <div id="nameError" class="error"></div>
+            <button id="nextBtn" disabled>Suivant</button>
+        </div>
+        
+        <!-- Step 2: Password -->
+        <div class="step" id="step2">
+            <label>Complétez le mot de passe :</label>
+            <div class="password-container">
+                <input type="text" class="password-input fixed-letter" maxlength="1" value="T" disabled>
+                <input type="text" class="password-input" maxlength="1" data-correct="O" value="">
+                <input type="text" class="password-input" maxlength="1" data-correct="P" value="">
+                <input type="text" class="password-input" maxlength="1" data-correct="I" value="">
+                <input type="text" class="password-input" maxlength="1" data-correct="T" value="">
+                <input type="text" class="password-input" maxlength="1" data-correct="O" value="">
+                <input type="text" class="password-input fixed-letter" maxlength="1" value="P" disabled>
+            </div>
+            <div id="passwordError" class="error"></div>
+            <button id="validateBtn">Valider</button>
+        </div>
+        
+        <!-- Step 3: Success -->
+        <div class="step" id="step3">
+            <img src="/api/placeholder/200/200" alt="Certificat Sushi" class="certificate-img">
+            <div class="success-message">Félicitations, votre certificat est prêt !</div>
+            <button id="downloadBtn">Télécharger le certificat</button>
+        </div>
+    </div>
+    
+    <div class="footer-notice">Ce site sera supprimé ce soir même.</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
